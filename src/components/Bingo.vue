@@ -69,9 +69,9 @@ export default {
   },
   created() {
     this.shuffled = this.shuffle(this.items)
-    // window.addEventListener('beforeunload', function(event) {
-    //   event.returnValue = 'Write something'
-    // })
+    window.addEventListener('beforeunload', function(event) {
+      event.returnValue = 'Write something'
+    })
   }
 }
 </script>
