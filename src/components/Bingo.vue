@@ -1,27 +1,27 @@
 <template>
   <v-container fluid>
     <v-row
-      v-for="n in 4"
-      :key="n"
+      v-for="(y, iY) in cols"
+      :key="iY"
       no-gutters
     >
       <v-col
-        v-for="k in 4"
-        :key="k"
+        v-for="(x, iX) in rows"
+        :key="iX"
         cols="3"
       >
-        <v-card
-          class="text-center"
-          :dark="shuffled[k+(n*4)-5].isActive"     
+        <v-card        
+          class="text-center pa-1"
+          :dark="shuffled[iX + 4*iY].isActive"     
           outlined
           tile
           elevation="6"
           height="100px"
           width="100px"
-          @click="shuffled[k+(n*4)-5].isActive = !shuffled[k+(n*4)-5].isActive"
+          @click="shuffled[iX + 4*iY].isActive = !shuffled[iX + 4*iY].isActive"
         >
         <small>
-          {{ shuffled[k+(n*4)-5].text }}
+          {{ shuffled[iX + 4*iY].text }}
         </small>
         </v-card>
       </v-col>
@@ -32,6 +32,8 @@
 <script>
 export default {
   data:() => ({
+    cols: 4,
+    rows: 4,
     items: [
       { text: 'Witze über Vegetarier 🙈', isActive: false},
       { text: 'Dirk mal wieder zu laut', isActive: false},
