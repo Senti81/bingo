@@ -12,20 +12,28 @@
       >
         <v-card        
           class="text-center pa-1"
-          :dark="shuffled[iX + 4*iY].isActive"     
+          :dark="shuffled[iX + cols*iY].isActive"     
           outlined
           tile
           elevation="6"
           height="100px"
           width="100px"
-          @click="shuffled[iX + 4*iY].isActive = !shuffled[iX + 4*iY].isActive"
+          @click="clickOnItem([iX + cols*iY])"
         >
-        <small>
+        <h6>
           {{ shuffled[iX + 4*iY].text }}
-        </small>
+        </h6>
         </v-card>
       </v-col>
     </v-row>
+    <v-btn 
+      block
+      small
+      class="mt-5"
+      color="primary"
+      @click="reset">
+      Neu laden
+    </v-btn>
   </v-container>
 </template>
 
@@ -52,11 +60,27 @@ export default {
       { text: 'Gejammere über Schulbeginn 😟', isActive: false},
       { text: 'Weibliche Person muss aufs 🚽', isActive: false},
       { text: 'Anselm weiß mal wieder alles besser', isActive: false},
-      { text: 'Hier nicht rubbeln, sonst kein Gewinn!', isActive: false},
       { text: 'Toll, eure neue Küche 👍', isActive: false},
+      { text: 'Matz rülpst', isActive: false},
+      { text: 'Opa nimmt die 🦷🦷 raus', isActive: false},
+      { text: 'Yolli wiederholt sich', isActive: false},
+      { text: 'Petra verbessert Dirk', isActive: false},
+      { text: 'Anselm googlet was', isActive: false},
+      { text: 'Franzi macht sich vor Lachen inne 👖', isActive: false},
+      { text: 'Philipp faselt was von 🚗🚕', isActive: false},
+      { text: 'Oma nix Englisch', isActive: false},
+      { text: 'Matz verbessert Yolli', isActive: false},
+      { text: 'Franzi hat Schluckauf', isActive: false},
+      { text: 'Anselm liegt auf dem Boden', isActive: false},
+      { text: 'Petra nimmt das Anstandsstück', isActive: false},
     ],
     shuffled: [],
   }),
+  computed: {
+    randomCards() {
+      return this.shuffle(this.items)
+    }
+  },
   methods: {
     shuffle(a) {
       var j, x, i;
@@ -67,13 +91,23 @@ export default {
         a[j] = x;
       }
       return a;
+    },
+    clickOnItem(id) {
+      this.shuffled[id].isActive = !this.shuffled[id].isActive
+      localStorage.setItem('bingoCards', JSON.stringify(this.shuffled))
+    },
+    reset() {
+      localStorage.removeItem('bingoCards')
+      this.shuffled = this.shuffle(this.items)
+      window.location.reload()
     }
   },
   created() {
-    this.shuffled = this.shuffle(this.items)
-    window.addEventListener('beforeunload', function(event) {
-      event.returnValue = 'Write something'
-    })
+    if (localStorage.getItem('bingoCards')) {
+      this.shuffled = JSON.parse(localStorage.getItem('bingoCards'))
+    } else {
+      this.shuffled = this.shuffle(this.items)
+    }
   }
 }
 </script>
