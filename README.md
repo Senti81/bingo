@@ -1,24 +1,9 @@
-# bingo
+# Family Bullshit Bingo
 
-## Project setup
-```
-npm install
-```
+## V1.0
+* Initiales Release
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## V1.1
+* Karten-Pool erweitert
+* Änderungen der Karten werden im Local Storage gespeichert und gehen bei Refesh der Seite nicht verloren
+* "Neu Laden" Button hinzugefügt, um das Spiel zurückzusetzten und um neue Karten zu erzeugen

@@ -76,11 +76,6 @@ export default {
     ],
     shuffled: [],
   }),
-  computed: {
-    randomCards() {
-      return this.shuffle(this.items)
-    }
-  },
   methods: {
     shuffle(a) {
       var j, x, i;
@@ -107,6 +102,7 @@ export default {
       this.shuffled = JSON.parse(localStorage.getItem('bingoCards'))
     } else {
       this.shuffled = this.shuffle(this.items)
+      localStorage.setItem('bingoCards', JSON.stringify(this.shuffled))
     }
   }
 }
