@@ -1,12 +1,12 @@
 <template>
   <v-container fluid>
     <v-row
-      v-for="(y, iY) in cols"
+      v-for="(y, iY) in rows"
       :key="iY"
       no-gutters
     >
       <v-col
-        v-for="(x, iX) in rows"
+        v-for="(x, iX) in cols"
         :key="iX"
         cols="3"
       >
@@ -18,10 +18,10 @@
           elevation="6"
           height="100px"
           width="100px"
-          @click="clickOnItem([iX + cols*iY])"
+          @click="clickOnItem(iX + cols*iY)"
         >
         <h6>
-          {{ shuffled[iX + 4*iY].text }}
+          {{ shuffled[iX + cols*iY].text }}
         </h6>
         </v-card>
       </v-col>
@@ -41,7 +41,7 @@
 export default {
   data:() => ({
     cols: 4,
-    rows: 4,
+    rows: 5,    
     items: [
       { text: 'Witze über Vegetarier 🙈', isActive: false},
       { text: 'Dirk mal wieder zu laut', isActive: false},
@@ -76,9 +76,18 @@ export default {
     ],
     shuffled: [],
   }),
+  computed: {
+    cardsRemaining() {
+      const checkedCards = this.shuffled.filter(element => element.isActive);
+      return this. cols * this.rows - checkedCards.length
+    },
+    isWinner() {
+      return this.cardsRemaining === 0
+    }
+  },
   methods: {
     shuffle(a) {
-      var j, x, i;
+      let j, x, i;
       for (i = a.length - 1; i > 0; i--) {
         j = Math.floor(Math.random() * (i + 1));
         x = a[i];
